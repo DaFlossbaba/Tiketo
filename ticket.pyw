@@ -1,11 +1,10 @@
 # ticket.pyw
-# Ticeto - A simple ticket management system with email notifications
+# Tiketo - A simple ticket management system with email notifications
 
 import tkinter as tk
 from tkinter import messagebox
 import json
 import uuid
-
 from email_sender import send_outlook_email
 import os
 
@@ -33,7 +32,7 @@ def create_ticket(title, description):
     save_tickets(tickets)  #  Correct function to save the data
     print(f"New ticket created: {ticket_id}")   
     send_outlook_email()  # Triggers email + logging
-    messagebox.showinfo("E-post skickad", "tickets.json har skickats till mottagaren!")
+    messagebox.showinfo("Email sent", "tickets.json have been sent!")
     return ticket_id
 
 def submit_ticket():
@@ -68,10 +67,9 @@ def delete_ticket():
         if ticket_id in tickets:
             del tickets[ticket_id]
             save_tickets(tickets)
-            refresh_list()           
-      
+            refresh_list()            
     else:
-        messagebox.showwarning("Ingen markering", "Välj ett ärende att ta bort.")
+        messagebox.showwarning("No selection", "Remove ticket.")
 
 def refresh_list():
     ticket_list.delete(0, tk.END)
@@ -82,13 +80,13 @@ def update_email_status():
     try:
         with open("email_log.txt", "r") as f:
             last_line = f.readlines()[-1].strip()
-            email_status_label.config(text=f"Senaste e-poststatus: {last_line}", fg="green" if "✅" in last_line else "red")
+            email_status_label.config(text=f"Latest emailstatus: {last_line}", fg="green" if "✅" in last_line else "red")
     except:
-        email_status_label.config(text="Senaste e-poststatus: Ej tillgänglig", fg="gray")
+        email_status_label.config(text="Latest emailstatus: Not available", fg="gray")
 
 # GUI (Tkinter)
 root = tk.Tk()
-root.title("Ticeto")
+root.title("Tiketo")
 
 tk.Label(root, text="Title:").pack()
 title_entry = tk.Entry(root, width=40)
@@ -97,17 +95,13 @@ title_entry.pack()
 tk.Label(root, text="Description:").pack()
 desc_entry = tk.Text(root, height=5, width=40)
 desc_entry.pack()
-
 tk.Button(root, text="Refresh", command=refresh_list).pack(pady=5)
-
 tk.Button(root, text="Create ticket", command=submit_ticket).pack(pady=5)
-
 tk.Button(root, text="Remove ticket", command=delete_ticket).pack(pady=5)
-
 tk.Label(root, text="All tickets:").pack()
 ticket_list = tk.Listbox(root, width=60)
 ticket_list.pack()
-email_status_label = tk.Label(root, text="Senaste e-poststatus: okänd", fg="gray")
+email_status_label = tk.Label(root, text="Latest emailstatus: Unknown", fg="gray")
 email_status_label.pack()
 
 refresh_list()
