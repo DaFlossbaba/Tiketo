@@ -9,7 +9,6 @@ import uuid
 from email_sender import send_outlook_email
 import os
 
-
 TICKETS_FILE = "tickets.json"
 
 def load_tickets():
@@ -35,9 +34,7 @@ def create_ticket(title, description):
     print(f"New ticket created: {ticket_id}")   
     send_outlook_email()  # Triggers email + logging
     messagebox.showinfo("E-post skickad", "tickets.json har skickats till mottagaren!")
-
     return ticket_id
-
 
 def submit_ticket():
     title = title_entry.get()
@@ -52,7 +49,6 @@ def submit_ticket():
         update_email_status()  #  Now it refreshes the email status label
     else:
         messagebox.showwarning("Error", "You must fill in both title and description.")
-
 
 def list_tickets():
     tickets = load_tickets()
@@ -72,8 +68,7 @@ def delete_ticket():
         if ticket_id in tickets:
             del tickets[ticket_id]
             save_tickets(tickets)
-            refresh_list()
-            
+            refresh_list()           
       
     else:
         messagebox.showwarning("Ingen markering", "Välj ett ärende att ta bort.")
@@ -90,8 +85,6 @@ def update_email_status():
             email_status_label.config(text=f"Senaste e-poststatus: {last_line}", fg="green" if "✅" in last_line else "red")
     except:
         email_status_label.config(text="Senaste e-poststatus: Ej tillgänglig", fg="gray")
-
-
 
 # GUI (Tkinter)
 root = tk.Tk()
