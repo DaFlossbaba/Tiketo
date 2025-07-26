@@ -9,7 +9,9 @@ Each ticket has a UUID, title, description, and status (open).
 🚀 Getting Started
 
 git clone https://github.com/DaFlossbaba/tiketo
+
 cd tiketo
+
 python ticket.pyw
 
 
